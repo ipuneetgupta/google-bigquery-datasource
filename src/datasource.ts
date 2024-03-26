@@ -13,7 +13,7 @@ import { uniqueId } from 'lodash';
 import { VariableEditor } from './components/VariableEditor';
 import { BigQueryOptions, BigQueryQueryNG, QueryFormat, QueryModel } from './types';
 import { interpolateVariable } from './utils/interpolateVariable';
-
+import { DEFAULT_REGION } from "./constants"
 export class BigQueryDatasource extends DataSourceWithBackend<BigQueryQueryNG, BigQueryOptions> {
   jsonData: BigQueryOptions;
 
@@ -108,14 +108,19 @@ export class BigQueryDatasource extends DataSourceWithBackend<BigQueryQueryNG, B
       hide: queryModel.hide,
       key: queryModel.key,
       queryType: queryModel.queryType,
-      datasource: queryModel.datasource,
+      datasource: this.getRef(),
       rawSql: interpolatedSql,
       format: queryModel.format,
       connectionArgs: {
         dataset: queryModel.dataset!,
         table: queryModel.table!,
-        location: queryModel.location!,
-      },
+        // eslint-disable-next-line prettier/prettier
+        location: queryModel.location !== 'UD' && queryModel.location !== undefined  // eslint-disable-next-line prettier/prettier
+        ? queryModel.location  // eslint-disable-next-line prettier/prettier
+        : queryModel.location === undefined
+          ? DEFAULT_REGION
+          : this.jsonData.processingLocation!,
+        },
     };
     return result;
   }

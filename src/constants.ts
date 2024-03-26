@@ -6,9 +6,12 @@ export const QUERY_FORMAT_OPTIONS = [
   { label: 'Table', value: QueryFormat.Table },
 ];
 
+export const DEFAULT_REGION = "US"
+
 export const PROCESSING_LOCATIONS: Array<SelectableValue<string>> = [
   // Allow BigQuery to select the processing location.
   { label: 'Automatic location selection', value: '' },
+  { label: 'Default', value: 'UD' },
 
   // Multi-regional locations
   { label: 'United States (US)', value: 'US' },

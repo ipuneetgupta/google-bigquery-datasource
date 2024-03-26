@@ -64,6 +64,7 @@ export const ProjectSelector: React.FC<ProjectSelectorProps> = ({ apiClient, val
         <Select
           aria-label="Project selector"
           value={state.loading ? null : value}
+          allowCustomValue
           options={state.loading ? [] : state.value || [{ label: value, value }]}
           onChange={onChange}
           isLoading={state.loading}
